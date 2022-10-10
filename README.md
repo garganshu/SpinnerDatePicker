@@ -3,12 +3,6 @@
 ~~Spinner DatePicker~~
 -----
 
-# Deprecation
- 
-This repo is no longer being maintained due to time constraints. #sorrynotsorry
-
-If you wish to transfer ownership then please contact the author via issues.
-
 ## Summary
 
 The old "spinner" style DatePicker for newer devices.
@@ -46,6 +40,7 @@ And then:
                 .showTitle(true)
                 .customTitle("My custom title")
                 .showDaySpinner(true)
+                .showMonthSpinner(true)
                 .defaultDate(2017, 0, 1)
                 .maxDate(2020, 0, 1)
                 .minDate(2000, 0, 1)
@@ -72,7 +67,7 @@ Add this to your **app level** `build.gradle`:
     
    ```gradle
    dependencies {
-       compile 'com.github.drawers:SpinnerDatePicker:2.0.1'
+       compile 'com.github.garganshu:SpinnerDatePicker:1.0.1'
    }
    ```             
 
