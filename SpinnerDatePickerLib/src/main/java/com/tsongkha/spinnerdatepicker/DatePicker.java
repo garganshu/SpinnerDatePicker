@@ -87,6 +87,8 @@ public class DatePicker extends FrameLayout {
 
     private boolean mIsDayShown = true;
 
+    private boolean mIsMonthShown = true;
+
     DatePicker(ViewGroup root, int numberPickerStyle) {
         super(root.getContext());
         mContext = root.getContext();
@@ -180,8 +182,9 @@ public class DatePicker extends FrameLayout {
     }
 
     void init(int year, int monthOfYear, int dayOfMonth,
-              boolean isDayShown, OnDateChangedListener onDateChangedListener) {
+              boolean isDayShown, boolean isMonthShown, OnDateChangedListener onDateChangedListener) {
         mIsDayShown = isDayShown;
+        mIsMonthShown = isMonthShown;
         setDate(year, monthOfYear, dayOfMonth);
         updateSpinners();
         mOnDateChangedListener = onDateChangedListener;
@@ -385,6 +388,7 @@ public class DatePicker extends FrameLayout {
     private void updateSpinners() {
         // set the spinner ranges respecting the min and max dates
         mDaySpinner.setVisibility(mIsDayShown ? View.VISIBLE : View.GONE);
+        mMonthSpinner.setVisibility(mIsMonthShown ? View.VISIBLE : View.GONE);
         if (mCurrentDate.equals(mMinDate)) {
             mDaySpinner.setMinValue(mCurrentDate.get(Calendar.DAY_OF_MONTH));
             mDaySpinner.setMaxValue(mCurrentDate.getActualMaximum(Calendar.DAY_OF_MONTH));
@@ -489,7 +493,7 @@ public class DatePicker extends FrameLayout {
     protected Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
 
-        return new SavedState(superState, mCurrentDate, mMinDate, mMaxDate, mIsDayShown);
+        return new SavedState(superState, mCurrentDate, mMinDate, mMaxDate, mIsDayShown, mIsMonthShown);
     }
 
     @Override
@@ -523,6 +527,7 @@ public class DatePicker extends FrameLayout {
         final long minDate;
         final long maxDate;
         final boolean isDaySpinnerShown;
+        final boolean isMonthSpinnerShown;
 
         /**
          * Constructor called from {@link DatePicker#onSaveInstanceState()}
@@ -531,12 +536,14 @@ public class DatePicker extends FrameLayout {
                    Calendar currentDate,
                    Calendar minDate,
                    Calendar maxDate,
-                   boolean isDaySpinnerShown) {
+                   boolean isDaySpinnerShown,
+                   boolean isMonthSpinnerShown) {
             super(superState);
             this.currentDate = currentDate.getTimeInMillis();
             this.minDate = minDate.getTimeInMillis();
             this.maxDate = maxDate.getTimeInMillis();
             this.isDaySpinnerShown = isDaySpinnerShown;
+            this.isMonthSpinnerShown = isMonthSpinnerShown;
         }
 
         /**
@@ -548,6 +555,7 @@ public class DatePicker extends FrameLayout {
             this.minDate = in.readLong();
             this.maxDate = in.readLong();
             this.isDaySpinnerShown = in.readByte() != 0;
+            this.isMonthSpinnerShown = in.readByte() != 0;
         }
 
         @Override
@@ -557,6 +565,7 @@ public class DatePicker extends FrameLayout {
             dest.writeLong(minDate);
             dest.writeLong(maxDate);
             dest.writeByte(isDaySpinnerShown ? (byte) 1 : (byte) 0);
+            dest.writeByte(isMonthSpinnerShown ? (byte) 1 : (byte) 0);
         }
     }
 }

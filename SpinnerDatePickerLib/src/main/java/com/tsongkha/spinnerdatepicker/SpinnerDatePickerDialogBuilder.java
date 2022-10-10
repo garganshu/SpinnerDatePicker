@@ -11,6 +11,7 @@ public class SpinnerDatePickerDialogBuilder {
     private DatePickerDialog.OnDateSetListener callBack;
     private DatePickerDialog.OnDateCancelListener onCancel;
     private boolean isDayShown = true;
+    private boolean isMonthShown = true;
     private boolean isTitleShown = true;
     private String customTitle = "";
     private int theme = 0;                 //default theme
@@ -65,6 +66,11 @@ public class SpinnerDatePickerDialogBuilder {
         return this;
     }
 
+    public SpinnerDatePickerDialogBuilder showMonthSpinner(boolean showMonthSpinner) {
+        this.isMonthShown = showMonthSpinner;
+        return this;
+    }
+
     public SpinnerDatePickerDialogBuilder showTitle(boolean showTitle) {
         this.isTitleShown = showTitle;
         return this;
@@ -79,6 +85,6 @@ public class SpinnerDatePickerDialogBuilder {
         if (context == null) throw new IllegalArgumentException("Context must not be null");
         if (maxDate.getTime().getTime() <= minDate.getTime().getTime()) throw new IllegalArgumentException("Max date is not after Min date");
 
-        return new DatePickerDialog(context, theme, spinnerTheme, callBack, onCancel, defaultDate, minDate, maxDate, isDayShown, isTitleShown, customTitle);
+        return new DatePickerDialog(context, theme, spinnerTheme, callBack, onCancel, defaultDate, minDate, maxDate, isDayShown, isMonthShown, isTitleShown, customTitle);
     }
 }
